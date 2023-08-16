@@ -34,6 +34,9 @@ Organizations:
             Endorsement:
                 Type: Signature
                 Rule: "OR('ManufacturerMSP.peer')"
+	AnchorPeers:
+	  - Host: peer0.manufacturer.example.com
+	    Port: 7051
     - &Delivery
         Name: DeliveryMSP
         ID: DeliveryMSP
@@ -51,6 +54,9 @@ Organizations:
             Endorsement:
                 Type: Signature
                 Rule: "OR('DeliveryMSP.peer')"
+	AnchorPeers:
+	  - Host: peer0.delivery.example.com
+	    Port: 7051
     - &Seller
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
@@ -77,6 +83,9 @@ Organizations:
             Endorsement:
                 Type: Signature
                 Rule: "OR('SellerMSP.peer')"
+	AnchorPeers:
+	  - Host: peer0.seller.example.com
+	    Port: 7051
 ################################################################################
 #
 #   SECTION: Capabilities
