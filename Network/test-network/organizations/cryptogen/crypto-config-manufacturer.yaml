@@ -11,8 +11,8 @@ PeerOrgs:
   # ---------------------------------------------------------------------------
   # Fabricant
   # ---------------------------------------------------------------------------
-  - Name: Fabricant
-    Domain: fabricant.example.com
+  - Name: Manufacturer
+    Domain: manufacturer.example.com
     EnableNodeOUs: true
     # ---------------------------------------------------------------------------
     # "Specs"
