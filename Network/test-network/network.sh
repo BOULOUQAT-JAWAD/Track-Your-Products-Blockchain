@@ -195,20 +195,24 @@ function createOrgs() {
 
   while :
     do
-      if [ ! -f "organizations/fabric-ca/org1/tls-cert.pem" ]; then
+      if [ ! -f "organizations/fabric-ca/manufacturer/tls-cert.pem" ] || [ ! -f "organizations/fabric-ca/delivery/tls-cert.pem" ] || [ ! -f "organizations/fabric-ca/seller/tls-cert.pem" ]; then
         sleep 1
       else
         break
       fi
     done
 
-    infoln "Creating Org1 Identities"
+    infoln "Creating Manufacturer Identities"
 
-    createOrg1
+    createManufacturer
 
-    infoln "Creating Org2 Identities"
+    infoln "Creating Delivery Identities"
 
-    createOrg2
+    createDelivery
+
+    infoln "Creating Seller Identities"
+
+    createSeller
 
     infoln "Creating Orderer Org Identities"
 
