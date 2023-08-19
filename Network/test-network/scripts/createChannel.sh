@@ -8,7 +8,7 @@ CHANNEL_NAME="$1"
 DELAY="$2"
 MAX_RETRY="$3"
 VERBOSE="$4"
-: ${CHANNEL_NAME:="mychannel"}
+CHANNEL_PORIFLE="$5"
 : ${DELAY:="3"}
 : ${MAX_RETRY:="5"}
 : ${VERBOSE:="false"}
@@ -19,7 +19,7 @@ fi
 
 createChannelTx() {
 	set -x
-	configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/${CHANNEL_NAME}.tx -channelID $CHANNEL_NAME
+	configtxgen -profile ${CHANNEL_PORIFLE} -outputCreateChannelTx ./channel-artifacts/${CHANNEL_NAME}.tx -channelID $CHANNEL_NAME
 	res=$?
 	{ set +x; } 2>/dev/null
   verifyResult $res "Failed to generate channel configuration transaction..."
@@ -61,7 +61,13 @@ joinChannel() {
 		COUNTER=$(expr $COUNTER + 1)
 	done
 	cat log.txt
-	verifyResult $res "After $MAX_RETRY attempts, peer0.org${ORG} has failed to join channel '$CHANNEL_NAME' "
+	if [ $ORG -eq 1 ]; then
+	verifyResult $res "After $MAX_RETRY attempts, peer0.manufacturer has failed to join channel '$CHANNEL_NAME' "
+	elif [ $ORG -eq 2 ]; then
+	verifyResult $res "After $MAX_RETRY attempts, peer0.delivery has failed to join channel '$CHANNEL_NAME' "
+	elif [ $ORG -eq 3 ]; then
+	verifyResult $res "After $MAX_RETRY attempts, peer0.seller has failed to join channel '$CHANNEL_NAME' "
+	fi
 }
 
 setAnchorPeer() {
@@ -84,15 +90,33 @@ createChannel
 successln "Channel '$CHANNEL_NAME' created"
 
 ## Join all the peers to the channel
-infoln "Joining org1 peer to the channel..."
-joinChannel 1
-infoln "Joining org2 peer to the channel..."
-joinChannel 2
+if [ "$CHANNEL_NAME" = "ChannelMD" ]; then
+	infoln "Joining Manufacturer peer to the channel..."
+	joinChannel 1
+	infoln "Joining Delivery peer to the channel..."
+	joinChannel 2
+elif [ "$CHANNEL_NAME" = "ChannelMDS" ]; then
+	infoln "Joining Manufacturer peer to the channel..."
+	joinChannel 1
+	infoln "Joining Delivery peer to the channel..."
+	joinChannel 2
+	infoln "Joining Seller peer to the channel..."
+	joinChannel 3
+fi
 
 ## Set the anchor peers for each org in the channel
-infoln "Setting anchor peer for org1..."
-setAnchorPeer 1
-infoln "Setting anchor peer for org2..."
-setAnchorPeer 2
+if [ "$CHANNEL_NAME" = "ChannelMD" ]; then
+	infoln "Setting anchor peer for Manufacturer..."
+	setAnchorPeer 1
+	infoln "Setting anchor peer for Delivery..."
+	setAnchorPeer 2
+elif [ "$CHANNEL_NAME" = "ChannelMDS" ]; then
+	infoln "Setting anchor peer for Manufacturer..."
+	setAnchorPeer 1
+	infoln "Setting anchor peer for Delivery..."
+	setAnchorPeer 2
+	infoln "Setting anchor peer for Seller..."
+	setAnchorPeer 3
+fi
 
 successln "Channel '$CHANNEL_NAME' joined"
