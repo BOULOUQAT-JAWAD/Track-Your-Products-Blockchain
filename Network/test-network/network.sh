@@ -220,7 +220,7 @@ function createOrgs() {
 
   fi
 
-  infoln "Generating CCP files for Org1 and Org2"
+  infoln "Generating CCP files for Manufacturer & Delivery & Seller"
   ./organizations/ccp-generate.sh
 }
 
@@ -262,7 +262,7 @@ function createConsortium() {
   # Note: For some unknown reason (at least for now) the block file can't be
   # named orderer.genesis.block or the orderer will fail to launch!
   set -x
-  configtxgen -profile TwoOrgsOrdererGenesis -channelID system-channel -outputBlock ./system-genesis-block/genesis.block
+  configtxgen -profile OrdererGenesis -channelID system-channel -outputBlock ./system-genesis-block/genesis.block
   res=$?
   { set +x; } 2>/dev/null
   if [ $res -ne 0 ]; then
