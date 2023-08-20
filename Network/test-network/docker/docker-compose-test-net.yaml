@@ -151,8 +151,8 @@ services:
       - CORE_PEER_LOCALMSPID=sellerMSP
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
-        - ../../organizations/peerOrganizations/seller.example.com/peers/peer0.seller.example.com/msp:/etc/hyperledger/fabric/msp
-        - ../../organizations/peerOrganizations/seller.example.com/peers/peer0.seller.example.com/tls:/etc/hyperledger/fabric/tls
+        - ../organizations/peerOrganizations/seller.example.com/peers/peer0.seller.example.com/msp:/etc/hyperledger/fabric/msp
+        - ../organizations/peerOrganizations/seller.example.com/peers/peer0.seller.example.com/tls:/etc/hyperledger/fabric/tls
         - peer0.seller.example.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
