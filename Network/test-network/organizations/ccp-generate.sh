@@ -50,8 +50,8 @@ ORG_L=seller
 ORG=Seller
 P0PORT=11051
 CAPORT=11054
-PEERPEM=../organizations/peerOrganizations/seller.example.com/tlsca/tlsca.seller.example.com-cert.pem
-CAPEM=../organizations/peerOrganizations/seller.example.com/ca/ca.seller.example.com-cert.pem
+PEERPEM=organizations/peerOrganizations/seller.example.com/tlsca/tlsca.seller.example.com-cert.pem
+CAPEM=organizations/peerOrganizations/seller.example.com/ca/ca.seller.example.com-cert.pem
 
-echo "$(json_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > ../organizations/peerOrganizations/seller.example.com/connection-seller.json
-echo "$(yaml_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > ../organizations/peerOrganizations/seller.example.com/connection-seller.yaml
+echo "$(json_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/seller.example.com/connection-seller.json
+echo "$(yaml_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/seller.example.com/connection-seller.yaml
