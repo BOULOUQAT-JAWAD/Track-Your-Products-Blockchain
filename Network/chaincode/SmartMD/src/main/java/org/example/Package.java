@@ -23,7 +23,7 @@ public class Package {
     @Property()
     private final String current_location;
     @Property()
-    private final Boolean delivered = false;
+    private final Boolean delivered;
     @Property()
     private Instant timestamp; // Using Instant for timestamp
 
@@ -31,12 +31,14 @@ public class Package {
                    @JsonProperty("products") final List<Product> products,
                    @JsonProperty("from") final String from,
                    @JsonProperty("to") final String to,
-                   @JsonProperty("current_location") final String current_location) {
+                   @JsonProperty("current_location") final String current_location,
+                   @JsonProperty("delivered") final Boolean delivered) {
         this.id = id;
         this.products = products;
         this.from = from;
         this.to = to;
         this.current_location = current_location;
+        this.delivered=delivered;
         this.timestamp = Instant.now();
     }
 
