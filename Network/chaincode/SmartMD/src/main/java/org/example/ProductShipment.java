@@ -66,7 +66,7 @@ public class ProductShipment implements ContractInterface {
         if (packageState.isEmpty()) {
             String errorMessage = String.format("Package %s does not exist", id);
             System.out.println(errorMessage);
-            throw new ChaincodeException(errorMessage, PackageErrors.PACKAGE_ALREADY_EXISTS.toString());
+            throw new ChaincodeException(errorMessage, PackageErrors.PACKAGE_NOT_FOUND.toString());
         }
 
         Package aPackage = genson.deserialize(packageState, Package.class);
