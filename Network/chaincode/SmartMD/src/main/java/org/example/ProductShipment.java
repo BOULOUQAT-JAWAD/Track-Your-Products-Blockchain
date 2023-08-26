@@ -19,6 +19,7 @@ public class ProductShipment implements ContractInterface {
 
     private enum PackageErrors {
         PACKAGE_NOT_FOUND,
+        PACKAGE_ALREADY_EXISTS
     }
 
     /*
@@ -31,5 +32,6 @@ public class ProductShipment implements ContractInterface {
     read and write state data, and invoke other chaincode functions.
      */
 
+    
 
 }
