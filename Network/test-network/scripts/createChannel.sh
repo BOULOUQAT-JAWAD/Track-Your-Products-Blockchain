@@ -90,33 +90,33 @@ createChannel
 successln "Channel '$CHANNEL_NAME' created"
 
 ## Join all the peers to the channel
-if [ "$CHANNEL_NAME" = "ChannelMD" ]; then
-	infoln "Joining Manufacturer peer to the channel..."
-	joinChannel 1
-	infoln "Joining Delivery peer to the channel..."
-	joinChannel 2
-elif [ "$CHANNEL_NAME" = "ChannelMDS" ]; then
+#if [ "$CHANNEL_NAME" = "ChannelMD" ]; then
+#	infoln "Joining Manufacturer peer to the channel..."
+#	joinChannel 1
+#	infoln "Joining Delivery peer to the channel..."
+#	joinChannel 2
+#elif [ "$CHANNEL_NAME" = "ChannelMDS" ]; then
 	infoln "Joining Manufacturer peer to the channel..."
 	joinChannel 1
 	infoln "Joining Delivery peer to the channel..."
 	joinChannel 2
 	infoln "Joining Seller peer to the channel..."
 	joinChannel 3
-fi
+#fi
 
 ## Set the anchor peers for each org in the channel
-if [ "$CHANNEL_NAME" = "ChannelMD" ]; then
-	infoln "Setting anchor peer for Manufacturer..."
-	setAnchorPeer 1
-	infoln "Setting anchor peer for Delivery..."
-	setAnchorPeer 2
-elif [ "$CHANNEL_NAME" = "ChannelMDS" ]; then
+#if [ "$CHANNEL_NAME" = "ChannelMD" ]; then
+#	infoln "Setting anchor peer for Manufacturer..."
+#	setAnchorPeer 1
+#	infoln "Setting anchor peer for Delivery..."
+#	setAnchorPeer 2
+#elif [ "$CHANNEL_NAME" = "ChannelMDS" ]; then
 	infoln "Setting anchor peer for Manufacturer..."
 	setAnchorPeer 1
 	infoln "Setting anchor peer for Delivery..."
 	setAnchorPeer 2
 	infoln "Setting anchor peer for Seller..."
 	setAnchorPeer 3
-fi
+#fi
 
 successln "Channel '$CHANNEL_NAME' joined"
