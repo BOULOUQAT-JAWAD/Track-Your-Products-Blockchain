@@ -9,7 +9,10 @@ import org.hyperledger.fabric.contract.annotation.Transaction;
 import org.hyperledger.fabric.contract.Context;
 import org.hyperledger.fabric.shim.ChaincodeException;
 import org.hyperledger.fabric.shim.ChaincodeStub;
+import org.hyperledger.fabric.shim.ledger.KeyModification;
+import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Contract(
@@ -78,5 +81,37 @@ public class ProductShipment implements ContractInterface {
         stub.putStringState(id, newPackageState);
 
         return newPackage;
+    }
+
+    @Transaction()
+    public Package queryPackageById(final Context ctx, final String id) {
+        ChaincodeStub stub = ctx.getStub();
+        String PackageState = stub.getStringState(id);
+
+        if (PackageState.isEmpty()) {
+            String errorMessage = String.format("Car %s does not exist", id);
+            System.out.println(errorMessage);
+            throw new ChaincodeException(errorMessage, PackageErrors.PACKAGE_NOT_FOUND.toString());
+        }
+
+        return genson.deserialize(PackageState, Package.class);
+    }
+
+    @Transaction()
+    public List<TransactionResponse> queryTransactionsForPackages(Context ctx, String id) {
+        ChaincodeStub stub = ctx.getStub();
+
+        QueryResultsIterator<KeyModification> results = stub.getHistoryForKey(id);
+
+        List<TransactionResponse> transactions = new ArrayList<>();
+
+        for (KeyModification result : results) {
+            TransactionResponse transaction = new TransactionResponse(result.getTxId(),
+                    String.valueOf(result.getTimestamp()),
+                    result.getStringValue());
+            transactions.add(transaction);
+        }
+
+        return transactions;
     }
 }
