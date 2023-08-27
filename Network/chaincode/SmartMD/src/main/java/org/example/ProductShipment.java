@@ -75,9 +75,7 @@ public class ProductShipment implements ContractInterface {
 
         Package aPackage = genson.deserialize(packageState, Package.class);
 
-        boolean delivered = aPackage.getTo().matches(current_location);
-
-        Package newPackage = new Package(id,aPackage.getProducts(),aPackage.getFrom(),aPackage.getTo(),current_location,delivered);
+        Package newPackage = new Package(id,aPackage.getProducts(),aPackage.getFrom(),aPackage.getTo(),current_location,false);
         String newPackageState = genson.serialize(newPackage);
         stub.putStringState(id, newPackageState);
         System.out.println(newPackageState);
@@ -115,10 +113,32 @@ public class ProductShipment implements ContractInterface {
                     String.valueOf(result.getTimestamp()),
                     result.getStringValue());
             transactions.add(transaction);
-            
+
             System.out.println(transaction);
         }
 
         return transactions;
+    }
+
+    @Transaction()
+    public Package ConfirmDelivery(final Context ctx, final String id) {
+        ChaincodeStub stub = ctx.getStub();
+
+        String packageState = stub.getStringState(id);
+
+        if (packageState.isEmpty()) {
+            String errorMessage = String.format("Package %s does not exist", id);
+            System.out.println(errorMessage);
+            throw new ChaincodeException(errorMessage, PackageErrors.PACKAGE_NOT_FOUND.toString());
+        }
+
+        Package aPackage = genson.deserialize(packageState, Package.class);
+
+        Package newPackage = new Package(id,aPackage.getProducts(),aPackage.getFrom(),aPackage.getTo(),aPackage.getTo(),true);
+        String newPackageState = genson.serialize(newPackage);
+        stub.putStringState(id, newPackageState);
+        System.out.println(newPackageState);
+
+        return newPackage;
     }
 }
