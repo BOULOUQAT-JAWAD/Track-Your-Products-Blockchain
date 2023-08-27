@@ -1,11 +1,9 @@
 package org.example;
 
 import java.time.Instant;
-
 import com.owlike.genson.annotation.JsonProperty;
 import org.hyperledger.fabric.contract.annotation.DataType;
 import org.hyperledger.fabric.contract.annotation.Property;
-
 import java.util.List;
 import java.util.Objects;
 
