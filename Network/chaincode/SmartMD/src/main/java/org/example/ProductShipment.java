@@ -56,6 +56,7 @@ public class ProductShipment implements ContractInterface {
         Package aPackage = new Package(id,products,from,to,from,false);
         packageState = genson.serialize(aPackage);
         stub.putStringState(id, packageState);
+        System.out.println(aPackage);
 
         return aPackage;
     }
@@ -79,6 +80,7 @@ public class ProductShipment implements ContractInterface {
         Package newPackage = new Package(id,aPackage.getProducts(),aPackage.getFrom(),aPackage.getTo(),current_location,delivered);
         String newPackageState = genson.serialize(newPackage);
         stub.putStringState(id, newPackageState);
+        System.out.println(newPackageState);
 
         return newPackage;
     }
@@ -94,7 +96,10 @@ public class ProductShipment implements ContractInterface {
             throw new ChaincodeException(errorMessage, PackageErrors.PACKAGE_NOT_FOUND.toString());
         }
 
-        return genson.deserialize(PackageState, Package.class);
+        Package aPackage =  genson.deserialize(PackageState, Package.class);
+        System.out.println(aPackage);
+
+        return aPackage;
     }
 
     @Transaction()
@@ -110,6 +115,8 @@ public class ProductShipment implements ContractInterface {
                     String.valueOf(result.getTimestamp()),
                     result.getStringValue());
             transactions.add(transaction);
+            
+            System.out.println(transaction);
         }
 
         return transactions;
