@@ -195,16 +195,16 @@ Profiles:
                     - *Manufacturer
                     - *Delivery
                     - *Seller
-#    TwoOrgsChannel:
-#        Consortium: SampleConsortium
-#        <<: *ChannelDefaults
-#        Application:
-#            <<: *ApplicationDefaults
-#            Organizations:
-#                - *Manufacturer
-#                - *Delivery
-#            Capabilities:
-#                <<: *ApplicationCapabilities
+    TwoOrgsChannel:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Manufacturer
+                - *Delivery
+            Capabilities:
+                <<: *ApplicationCapabilities
     ThreeOrgsChannel:
         Consortium: SampleConsortium
         <<: *ChannelDefaults

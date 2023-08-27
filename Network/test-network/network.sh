@@ -195,7 +195,7 @@ function createOrgs() {
 
   while :
     do
-      if [ ! -f "organizations/fabric-ca/manufacturer/tls-cert.pem" ] || [ ! -f "organizations/fabric-ca/delivery/tls-cert.pem" ] || [ ! -f "organizations/fabric-ca/seller/tls-cert.pem" ]; then
+      if [ ! -f "organizations/fabric-ca/manufacturer/tls-cert.pem" ] && [ ! -f "organizations/fabric-ca/delivery/tls-cert.pem" ] && [ ! -f "organizations/fabric-ca/seller/tls-cert.pem" ]; then
         sleep 1
       else
         break
@@ -363,7 +363,7 @@ MAX_RETRY=5
 # default for delay between commands
 CLI_DELAY=3
 # channel name defaults to "mychannel"
-CHANNEL_NAME="mychannel"
+CHANNEL_NAME="channelmds"
 # chaincode name defaults to "NA"
 CC_NAME="NA"
 # chaincode path defaults to "NA"
