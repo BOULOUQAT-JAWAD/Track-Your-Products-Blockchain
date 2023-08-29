@@ -64,9 +64,9 @@ elif [ "$CC_SRC_LANGUAGE" = "java" ]; then
   CC_RUNTIME_LANGUAGE=java
 
   infoln "Compiling Java code..."
-  pushd $CC_SRC_PATH
-  ./gradlew installDist
-  popd
+  #pushd $CC_SRC_PATH
+  #./gradlew installDist
+  #popd
   successln "Finished compiling Java code"
   CC_SRC_PATH=$CC_SRC_PATH/build/install/$CC_NAME
 
