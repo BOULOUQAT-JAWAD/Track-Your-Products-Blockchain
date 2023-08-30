@@ -24,6 +24,11 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.+'
 }
 
+tasks.register('installDist', Copy) {
+    from sourceSets.main.output
+    into "${projectDir}/build/install/${project.name}"
+}
+
 test {
     useJUnitPlatform()
 }
