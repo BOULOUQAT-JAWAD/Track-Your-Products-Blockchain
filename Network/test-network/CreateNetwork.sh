@@ -64,13 +64,13 @@ if [ -n "$packageID" ]; then
     source ./lifecycle_setup_manufacturer.sh
     peer lifecycle chaincode getinstalledpackage --package-id $packageID --peerAddresses localhost:7051 --tlsRootCertFiles $CORE_PEER_TLS_ROOTCERT_FILE
     
-    peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C channelmds --name SmartMDS --version 1.0 --init-required --package-id $PACKAGEID --sequence 1
+    peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C channelmds --name SmartMDS --version 1.0 --init-required --package-id $packageID --sequence 1
     
     source ./lifecycle_setup_delivery.sh
-    peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C channelmds --name SmartMDS --version 1.0 --init-required --package-id $PACKAGEID --sequence 1
+    peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C channelmds --name SmartMDS --version 1.0 --init-required --package-id $packageID --sequence 1
     
     source ./lifecycle_setup_seller.sh
-    peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C channelmds --name SmartMDS --version 1.0 --init-required --package-id $PACKAGEID --sequence 1
+    peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C channelmds --name SmartMDS --version 1.0 --init-required --package-id $packageID --sequence 1
 
     source ./lifecycle_setup_manufacturer.sh
     peer lifecycle chaincode checkcommitreadiness -C channelmds --name SmartMDS --version 1.0 --sequence 1 --output json --init-required
@@ -80,7 +80,13 @@ if [ -n "$packageID" ]; then
     
     source ./lifecycle_setup_seller.sh
     peer lifecycle chaincode checkcommitreadiness -C channelmds --name SmartMDS --version 1.0 --sequence 1 --output json --init-required
-    
+  
+    source ./lifecycle_setup__Channel_commit.sh
+peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C channelmds --name SmartMDS --peerAddresses localhost:7051 --tlsRootCertFiles $CORE_PEER_TLS_ROOTCERT_FILE_MANUFACTURER --peerAddresses localhost:9051 --tlsRootCertFiles $CORE_PEER_TLS_ROOTCERT_FILE_DELEVERY --version 1.0 --sequence 1 --init-required
+
+    source ./lifecycle_setup_manufacturer.sh
+peer lifecycle chaincode querycommitted -C channelmds --name SmartMDS
+
     
 else
     echo "Failed to extract Package ID from the queryinstalled output."
