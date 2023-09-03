@@ -82,7 +82,7 @@ if [ -n "$packageID" ]; then
     peer lifecycle chaincode checkcommitreadiness -C channelmds --name SmartMDS --version 1.0 --sequence 1 --output json --init-required
   
     source ./lifecycle_setup__Channel_commit.sh
-peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C channelmds --name SmartMDS --peerAddresses localhost:7051 --tlsRootCertFiles $CORE_PEER_TLS_ROOTCERT_FILE_MANUFACTURER --peerAddresses localhost:9051 --tlsRootCertFiles $CORE_PEER_TLS_ROOTCERT_FILE_DELEVERY --version 1.0 --sequence 1 --init-required
+peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C channelmds --name SmartMDS --peerAddresses localhost:7051 --tlsRootCertFiles $CORE_PEER_TLS_ROOTCERT_FILE_MANUFACTURER --peerAddresses localhost:9051 --tlsRootCertFiles $CORE_PEER_TLS_ROOTCERT_FILE_DELIVERY --version 1.0 --sequence 1 --init-required
 
     source ./lifecycle_setup_manufacturer.sh
 peer lifecycle chaincode querycommitted -C channelmds --name SmartMDS

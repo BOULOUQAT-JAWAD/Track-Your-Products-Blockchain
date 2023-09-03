@@ -40,7 +40,25 @@ public class ProductShipment implements ContractInterface {
     The chaincode stub is an interface that allows the smart contract code to interact with the blockchain ledger,
     read and write state data, and invoke other chaincode functions.
      */
+     
+    @Transaction()
+    public void initLedger(final Context ctx){
 
+        ChaincodeStub stub = ctx.getStub();
+
+        Product product = new Product("1", "Ipad", 500);
+
+        List<Product> products = new ArrayList<>();
+
+        products.add(product);
+
+        Package aPackage = new Package("1",products,"casablanca","tanger","casablanca",false);
+
+        String PackageState = genson.serialize(aPackage);
+
+        stub.putStringState("1", PackageState);
+    }
+    
     @Transaction()
     public Package createPackage(final Context ctx, final String id, final List<Product> products,
                                  final String from,final String to) {
