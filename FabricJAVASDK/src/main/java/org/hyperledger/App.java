@@ -6,6 +6,8 @@ package org.hyperledger;
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
@@ -33,6 +35,8 @@ import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.cert.CertificateException;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public final class App {
@@ -54,7 +58,7 @@ public final class App {
     private static final String OVERRIDE_AUTH = "peer0.manufacturer.example.com";
 
     private final Contract contract;
-    private final String assetId = "asset" + Instant.now().toEpochMilli();
+    private final String packageId = "1";
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public static void main(final String[] args) throws Exception {
@@ -171,10 +175,19 @@ public final class App {
      * Submit a transaction synchronously, blocking until it has been committed to
      * the ledger.
      */
-    private void createAsset() throws EndorseException, SubmitException, CommitStatusException, CommitException {
-        System.out.println("\n--> Submit Transaction: CreateAsset, creates new asset with ID, Color, Size, Owner and AppraisedValue arguments");
+    private void createPackage() throws EndorseException, SubmitException, CommitStatusException, CommitException, JsonProcessingException {
+        System.out.println("\n--> Submit Transaction: createPackage, creates new Package");
 
-        contract.submitTransaction("CreateAsset", assetId, "yellow", "5", "Tom", "1300");
+        Product product = new Product("10", "IPHONE", 120);
+
+        List<Product> products = new ArrayList<>();
+
+        products.add(product);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String productListJson = objectMapper.writeValueAsString(products);
+
+        contract.submitTransaction("createPackage", packageId, productListJson,"casablanca","tanger");
 
         System.out.println("*** Transaction committed successfully");
     }
